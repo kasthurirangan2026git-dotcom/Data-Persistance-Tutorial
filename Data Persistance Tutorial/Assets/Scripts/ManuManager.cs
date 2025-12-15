@@ -22,6 +22,10 @@ public class ManuManager : MonoBehaviour
 [SerializeField]
     InputField playerNameInput;
 
+    public TextMeshProUGUI text;
+
+    Vector3 pos = new Vector3(115, 933,0);
+
     void Awake()
     {
        
@@ -39,8 +43,11 @@ public class ManuManager : MonoBehaviour
         DataManager.dataManager.playerNameInput = playerNameInput.text;
         string x = DataManager.dataManager.playerNameInput;
         Debug.Log(x);
-        DataManager.dataManager.SaveFiles();
+        DataManager.dataManager.savePlayerName();
         SceneManager.LoadScene(1);
+        text.rectTransform.transform.position =  pos;
+
+
     }
 
     public void ExitGame()

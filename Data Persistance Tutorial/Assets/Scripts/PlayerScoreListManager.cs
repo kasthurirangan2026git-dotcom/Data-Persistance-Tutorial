@@ -17,11 +17,11 @@ public class PlayerScoreListManager : MonoBehaviour
      
 
      void Start()
-    {
+    {  playerList = new string[playerMax];
 
-     
+      
     
-          playerList = new string[playerMax];
+          
 
          for (int i = 0; i< playerMax; i++)
         {

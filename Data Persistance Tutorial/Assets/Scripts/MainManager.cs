@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Android.Gradle.Manifest;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class MainManager : MonoBehaviour
@@ -12,6 +14,10 @@ public class MainManager : MonoBehaviour
     public Rigidbody Ball;
 
     public Text ScoreText;
+
+   
+
+
     public GameObject GameOverText;
     
     private bool m_Started = false;
@@ -20,6 +26,10 @@ public class MainManager : MonoBehaviour
     private bool m_GameOver = false;
 
     private int currentScore;
+    private Vector3 vector3 = new Vector3(0,-10,0);
+
+  
+
 
     
     // Start is called before the first frame update
@@ -43,6 +53,12 @@ public class MainManager : MonoBehaviour
         
         
     }
+    
+    public void Back()
+        {
+            ScoreManager.scoreManager.textMeshProx.rectTransform.position = vector3;
+            SceneManager.LoadScene(0);
+        }
 
     private void Update()
     {
@@ -57,12 +73,29 @@ public class MainManager : MonoBehaviour
 
                 Ball.transform.SetParent(null);
                 Ball.AddForce(forceDir * 2.0f, ForceMode.VelocityChange);
+
+
+
             }
         }
         else if (m_GameOver)
-        {
+        {   
+
             if (Input.GetKeyDown(KeyCode.Space))
-            {
+            {Debug.Log(DataManager.dataManager.playerScore);
+                
+                DataManager.dataManager.savePlayerInfo();
+
+               
+                if(currentScore > DataManager.dataManager.playerScore)
+                {   DataManager.dataManager.playerScore  =  currentScore;
+                     ScoreManager.scoreManager.p1Score = currentScore;
+                    
+                     ScoreManager.scoreManager.textMeshProx.text = $"{DataManager.dataManager.playerNameInput}: {DataManager.dataManager.playerScore }";
+                    DataManager.dataManager.SaveFiles();
+                }
+               
+                
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
@@ -87,5 +120,10 @@ public class MainManager : MonoBehaviour
         GameOverText.SetActive(true);
 
         
+
     }
+
+
+
 }
+ 
